@@ -26,3 +26,19 @@ export type ImpostazioniFiscali = {
   modalitaCalcolo: ModalitaCalcoloImposta;
   aliquotaContributiInps: number;      // es. 0.2607, serve per stimare l'INPS
 };
+
+/** Totali di partenza per un periodo (un mese, un anno, tutto) */
+export type TotaliPeriodo = {
+  incassatoCentesimi: number;
+  contributiInpsVersatiCentesimi: number;
+};
+
+/** Risultato del calcolo fiscale di un periodo */
+export type RiepilogoFiscale = {
+  incassatoCentesimi: number;
+  redditoLordoCentesimi: number;
+  baseImponibileCentesimi: number;
+  impostaSostitutivaCentesimi: number;
+  contributiInpsStimatiCentesimi: number;
+  nettoStimatoCentesimi: number;
+};
