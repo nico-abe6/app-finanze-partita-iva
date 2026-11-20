@@ -44,8 +44,25 @@ export function ModuloImpostazioniFiscali({ impostazioniIniziali, onSalvate }: P
         }
       : null;
 
+  // Nell'esempio si suppone di aver versato contributi pari alla stima INPS:
+  // così la modalità "al netto dei contributi" mostra davvero la deduzione.
+  const contributiDiEsempioCentesimi = valide
+    ? Math.round(
+        Math.round(INCASSO_DI_ESEMPIO_CENTESIMI * valide.coefficienteRedditivita) * valide.aliquotaContributiInps
+      )
+    : 0;
   const esempio = valide
-    ? calcolaRiepilogoFiscale({ incassatoCentesimi: INCASSO_DI_ESEMPIO_CENTESIMI, contributiInpsVersatiCentesimi: 0 }, valide)
+    ? calcolaRiepilogoFiscale(
+        { incassatoCentesimi: INCASSO_DI_ESEMPIO_CENTESIMI, contributiInpsVersatiCentesimi: contributiDiEsempioCentesimi },
+        valide
+      )
+    : null;
+  // Imposta con l'altra modalità, per confronto
+  const esempioAltraModalita = valide
+    ? calcolaRiepilogoFiscale(
+        { incassatoCentesimi: INCASSO_DI_ESEMPIO_CENTESIMI, contributiInpsVersatiCentesimi: contributiDiEsempioCentesimi },
+        { ...valide, modalitaCalcolo: valide.modalitaCalcolo === 'prudente' ? 'netto_inps' : 'prudente' }
+      )
     : null;
 
   function ripristina() {
@@ -146,7 +163,10 @@ export function ModuloImpostazioniFiscali({ impostazioniIniziali, onSalvate }: P
 
       {esempio && (
         <div className={stili.esempio}>
-          <p className={stili.esempioTitolo}>Esempio con {formattaCentesimiInEuro(INCASSO_DI_ESEMPIO_CENTESIMI)} incassati</p>
+          <p className={stili.esempioTitolo}>
+            Esempio con {formattaCentesimiInEuro(INCASSO_DI_ESEMPIO_CENTESIMI)} incassati e{' '}
+            {formattaCentesimiInEuro(contributiDiEsempioCentesimi)} di contributi INPS versati
+          </p>
           <dl className={stili.esempioValori}>
             <div>
               <dt>Imposta</dt>
@@ -161,6 +181,12 @@ export function ModuloImpostazioniFiscali({ impostazioniIniziali, onSalvate }: P
               <dd>{formattaCentesimiInEuro(esempio.nettoStimatoCentesimi)}</dd>
             </div>
           </dl>
+          {esempioAltraModalita && (
+            <p className={stili.esempioConfronto}>
+              Base imponibile {formattaCentesimiInEuro(esempio.baseImponibileCentesimi)}. Con l'altra modalità l'imposta
+              sarebbe {formattaCentesimiInEuro(esempioAltraModalita.impostaSostitutivaCentesimi)}.
+            </p>
+          )}
         </div>
       )}
 

@@ -105,6 +105,12 @@
   font-variant-numeric: tabular-nums;
 }
 
+.esempioConfronto {
+  margin: var(--spazio-2) 0 0;
+  font-size: 0.8rem;
+  color: var(--colore-testo-secondario);
+}
+
 .azioni {
   display: flex;
   flex-wrap: wrap;
