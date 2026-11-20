@@ -5,6 +5,7 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '../../db/clienteSupabase';
+import { emailInNomeUtente } from '../../domain/utenti';
 import { useDatiFiscali } from '../../hooks/useDatiFiscali';
 import { ModuloImpostazioniFiscali } from './ModuloImpostazioniFiscali';
 import stili from './PaginaImpostazioni.module.css';
@@ -15,7 +16,7 @@ export function PaginaImpostazioni() {
   const [email, setEmail] = useState<string | null>(null);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setEmail(data.session?.user.email ?? null));
+    supabase.auth.getSession().then(({ data }) => setEmail(data.session?.user.email ? emailInNomeUtente(data.session.user.email) : null));
   }, []);
 
   return (

@@ -43,7 +43,7 @@ I dati sono salvati su **Supabase** (database PostgreSQL in UE), quindi sono gli
    - `002_preferenze_dashboard.sql` – disposizione dei widget del Riepilogo
    - `003_movimenti_destinazione.sql` – conto di destinazione per risparmi e investimenti
    - `004_segnale_attivita.sql` – funzione usata per evitare la pausa del progetto gratuito (vedi [Backup](#backup))
-3. **Utente**: in Supabase, *Authentication → Users → Add user* (email e password, conferma automatica). Poi disattiva le nuove registrazioni (*Allow new users to sign up*).
+3. **Utente**: in Supabase, *Authentication → Users → Add user*, con email `<nomeutente>@account.invalid`, una password e la conferma automatica. Nell'app si entra scrivendo solo `<nomeutente>` (il dominio è in `src/config/accesso.ts`; un'email completa con `@` funziona comunque). Poi disattiva le nuove registrazioni (*Allow new users to sign up*).
 4. **Collegamento**: copia `.env.example` in `.env.local` e inserisci URL del progetto e **chiave publishable** (*Project Settings → API Keys*). Non usare mai la *secret key* nell'app.
 
 La sicurezza dei dati è garantita dalla **Row Level Security** attiva su tutte le tabelle: la chiave publishable è visibile a chiunque apra il sito, ma senza login non dà accesso a nessun dato.
