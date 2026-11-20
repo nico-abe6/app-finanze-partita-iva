@@ -42,6 +42,7 @@ I dati sono salvati su **Supabase** (database PostgreSQL in UE), quindi sono gli
    - `001_schema_iniziale.sql` – tabelle di fatturato, impostazioni, conti, movimenti
    - `002_preferenze_dashboard.sql` – disposizione dei widget del Riepilogo
    - `003_movimenti_destinazione.sql` – conto di destinazione per risparmi e investimenti
+   - `004_segnale_attivita.sql` – funzione usata per evitare la pausa del progetto gratuito (vedi [Backup](#backup))
 3. **Utente**: in Supabase, *Authentication → Users → Add user* (email e password, conferma automatica). Poi disattiva le nuove registrazioni (*Allow new users to sign up*).
 4. **Collegamento**: copia `.env.example` in `.env.local` e inserisci URL del progetto e **chiave publishable** (*Project Settings → API Keys*). Non usare mai la *secret key* nell'app.
 
@@ -135,7 +136,11 @@ L'app si apre a schermo intero con la propria icona e si aggiorna da sola quando
 
 ## Backup
 
-Il piano gratuito di Supabase non fa copie di sicurezza e mette in pausa i progetti inattivi per 7 giorni (i dati restano; si riattiva dal pannello di Supabase). Da *Impostazioni → Backup dei dati*:
+Il piano gratuito di Supabase non fa copie di sicurezza e mette in pausa i progetti senza attività per 7 giorni. La pausa **non cancella i dati**: il progetto si riattiva da *Dashboard → Resume project*, ma solo entro un periodo limitato; dopo, i dati si possono soltanto scaricare come backup e ricaricare in un nuovo progetto.
+
+Per evitare la pausa, il workflow `.github/workflows/mantieni-attivo.yml` chiama ogni 2 giorni la funzione `segnale_attivita` del database (migrazione 004). Usa le stesse variabili del repository del workflow di pubblicazione. Nei repository pubblici GitHub sospende i workflow pianificati dopo 60 giorni senza nuovi commit: in quel caso arriva un'email e basta riattivarlo dalla scheda *Actions*. L'alternativa senza pause è il piano a pagamento di Supabase.
+
+Da *Impostazioni → Backup dei dati*:
 
 - **Scarica backup** salva un file `finanze-backup-AAAA-MM-GG.json` con fatturato, impostazioni, conti, movimenti e widget;
 - **Importa backup** rilegge un file: controlla tutti i dati prima di importare, poi crea o aggiorna i record (non cancella quelli già presenti).
