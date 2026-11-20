@@ -2,7 +2,7 @@
 
 Web app personale per:
 
-- registrare l'**incassato mese per mese** di una partita IVA in **regime forfettario** e stimare imposta sostitutiva, contributi INPS e netto;
+- registrare il **fatturato mese per mese** di una partita IVA in **regime forfettario**: imposta sostitutiva, contributi INPS e netto si calcolano in automatico;
 - vedere i **riepiloghi** mese per mese, anno per anno e dall'inizio, con **grafici e tabelle a widget** personalizzabili;
 - gestire **conti** (corrente, risparmi, investimenti, contanti) e **movimenti** (entrate, uscite, risparmi, investimenti, trasferimenti) con **etichette** e priorità di spesa **Devo / Ho bisogno / Voglio**.
 
@@ -73,7 +73,8 @@ Il menu in basso ha quattro icone.
 
 ### Fatturato (scontrino)
 
-- Scegli l'anno e tocca un mese: inserisci l'**incassato** (principio di cassa: ciò che hai incassato, non fatturato) e i **contributi INPS versati** nel mese. Vedi subito la stima di imposta, INPS e netto.
+- Scegli l'anno e tocca un mese: inserisci solo il **fatturato** (il totale delle fatture emesse). Imposta, INPS e netto si calcolano da soli e li vedi subito in anteprima.
+- Il forfettario tassa ciò che incassi: se un cliente paga in un mese diverso da quello della fattura, inserisci l'importo nel mese del pagamento.
 - Gli importi si scrivono come `1250,50`, `1.250,50` o `1250.50`.
 
 ### Conti (portafoglio)
@@ -98,14 +99,15 @@ Tutti gli importi sono gestiti in **centesimi** (numeri interi), per evitare err
 
 | Passo | Formula |
 |---|---|
-| Reddito lordo | incassato × coefficiente di redditività |
-| Deduzione | modalità *al netto INPS*: contributi INPS versati; modalità *prudente*: 0 |
+| Reddito lordo | fatturato × coefficiente di redditività |
+| INPS stimato | reddito lordo × aliquota INPS |
+| Deduzione | modalità *al netto INPS*: INPS stimato; modalità *prudente*: 0 |
 | Base imponibile | reddito lordo − deduzione (mai sotto zero) |
 | Imposta sostitutiva | base imponibile × aliquota |
-| INPS stimato | reddito lordo × aliquota INPS |
-| Netto stimato | incassato − imposta − INPS stimato |
+| Netto stimato | fatturato − imposta − INPS stimato |
 
-- La modalità **prudente** applica l'imposta su tutto il reddito lordo (es. 5% sul 78% dell'incassato) senza togliere i contributi: accantoni un po' di più.
+- La modalità **prudente** applica l'imposta su tutto il reddito lordo (es. 5% sul 78% del fatturato) senza togliere i contributi: accantoni un po' di più.
+- La modalità **al netto INPS** toglie dal reddito la stima dei contributi, calcolata in automatico: non serve inserire i contributi versati. Nella dichiarazione reale si deducono i contributi effettivamente versati nell'anno, quindi il valore finale può differire.
 - Le imposte si calcolano **anno per anno**: il valore annuale è quello che fa fede; il totale dall'inizio è la somma dei risultati annuali. I valori mensili sono una ripartizione indicativa.
 - Il codice è in `src/domain/calcoloFiscale.ts` e `src/domain/riepilogoPeriodi.ts`, con i test in `src/domain/__tests__/`.
 

@@ -1,6 +1,6 @@
 /**
  * WidgetGraficoAnnuale.tsx
- * Widget: confronto tra anni, con colonne affiancate di incassato e netto stimato.
+ * Widget: confronto tra anni, con colonne affiancate di fatturato e netto stimato.
  */
 
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
@@ -33,7 +33,7 @@ export function WidgetGraficoAnnuale({ righe, impostazioni }: ProprietaWidget) {
     <>
       <LegendaGrafico
         voci={[
-          { etichetta: 'Incassato', colore: COLORI_SERIE.incassato, forma: 'rettangolo' },
+          { etichetta: 'Fatturato', colore: COLORI_SERIE.incassato, forma: 'rettangolo' },
           { etichetta: 'Netto stimato', colore: COLORI_SERIE.netto, forma: 'rettangolo' },
         ]}
       />
@@ -44,7 +44,7 @@ export function WidgetGraficoAnnuale({ righe, impostazioni }: ProprietaWidget) {
             <XAxis dataKey="etichetta" {...proprietaAsseX('Anno')} />
             <YAxis {...PROPRIETA_ASSE_Y_EURO} />
             <Tooltip cursor={{ fill: COLORI_STRUTTURA_GRAFICO.evidenziaColonna, stroke: 'none' }} content={<TooltipGrafico />} />
-            <Bar dataKey="incassato" name="Incassato" fill={COLORI_SERIE.incassato} radius={RAGGIO_CIMA_BARRA} {...PROPRIETA_BARRA} />
+            <Bar dataKey="incassato" name="Fatturato" fill={COLORI_SERIE.incassato} radius={RAGGIO_CIMA_BARRA} {...PROPRIETA_BARRA} />
             <Bar dataKey="netto" name="Netto stimato" fill={COLORI_SERIE.netto} radius={RAGGIO_CIMA_BARRA} {...PROPRIETA_BARRA} />
           </BarChart>
         </ResponsiveContainer>

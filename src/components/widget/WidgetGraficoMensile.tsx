@@ -1,6 +1,6 @@
 /**
  * WidgetGraficoMensile.tsx
- * Widget: colonne impilate mese per mese. Ogni colonna è l'incassato del mese,
+ * Widget: colonne impilate mese per mese. Ogni colonna è il fatturato del mese,
  * diviso in netto stimato (in basso), INPS stimato e imposta (in cima).
  */
 
@@ -56,7 +56,7 @@ export function WidgetGraficoMensile({ righe, impostazioni, anno }: ProprietaWid
                 <TooltipGrafico
                   rigaTotale={(voci) => {
                     const incassato = (voci[0] as { payload?: { incassato?: number } } | undefined)?.payload?.incassato;
-                    return incassato === undefined ? null : { etichetta: 'Incassato', valoreEuro: incassato };
+                    return incassato === undefined ? null : { etichetta: 'Fatturato', valoreEuro: incassato };
                   }}
                 />
               }

@@ -22,27 +22,26 @@ export function calcolaRiepilogoFiscale(
   totali: TotaliPeriodo,
   impostazioni: ImpostazioniFiscali
 ): RiepilogoFiscale {
-  // Parte dell'incassato considerata reddito (es. 78%)
+  // Parte del fatturato considerata reddito (es. 78%)
   const redditoLordoCentesimi = Math.round(
     totali.incassatoCentesimi * impostazioni.coefficienteRedditivita
   );
 
-  // In modalità "netto_inps" si deducono i contributi versati; in "prudente" no
+  // Stima dei contributi INPS da accantonare, calcolata sul reddito lordo
+  const contributiInpsStimatiCentesimi = Math.round(
+    redditoLordoCentesimi * impostazioni.aliquotaContributiInps
+  );
+
+  // In modalità "netto_inps" si toglie dal reddito la stima dei contributi INPS
+  // (calcolata in automatico); in "prudente" non si toglie nulla
   const deduzioneCentesimi =
-    impostazioni.modalitaCalcolo === 'netto_inps'
-      ? totali.contributiInpsVersatiCentesimi
-      : 0;
+    impostazioni.modalitaCalcolo === 'netto_inps' ? contributiInpsStimatiCentesimi : 0;
 
   // La base imponibile non può essere negativa
   const baseImponibileCentesimi = Math.max(0, redditoLordoCentesimi - deduzioneCentesimi);
 
   const impostaSostitutivaCentesimi = Math.round(
     baseImponibileCentesimi * impostazioni.aliquotaImpostaSostitutiva
-  );
-
-  // Stima dei contributi da accantonare, calcolata sul reddito lordo
-  const contributiInpsStimatiCentesimi = Math.round(
-    redditoLordoCentesimi * impostazioni.aliquotaContributiInps
   );
 
   const nettoStimatoCentesimi =

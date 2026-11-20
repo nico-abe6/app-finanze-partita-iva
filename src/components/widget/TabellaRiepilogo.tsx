@@ -1,7 +1,7 @@
 /**
  * TabellaRiepilogo.tsx
  * Tabella con una riga per periodo (mese o anno) e una riga di totale.
- * Colonne: periodo, incassato, imposta, INPS stimato, netto stimato.
+ * Colonne: periodo, fatturato, imposta, INPS stimato, netto stimato.
  */
 
 import { formattaCentesimiInEuro } from '../../domain/importi';
@@ -42,7 +42,7 @@ export function TabellaRiepilogo({ intestazionePeriodo, righe, totale, nota }: P
           <thead>
             <tr>
               <th scope="col">{intestazionePeriodo}</th>
-              <th scope="col">Incassato</th>
+              <th scope="col">Fatturato</th>
               <th scope="col">Imposta</th>
               <th scope="col">INPS stimato</th>
               <th scope="col">Netto stimato</th>

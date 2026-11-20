@@ -2,7 +2,7 @@
  * ModuloImpostazioniFiscali.tsx
  * Form delle impostazioni del regime forfettario: aliquota, coefficiente di redditività,
  * modalità di calcolo (prudente o netto INPS) e aliquota INPS per la stima dei contributi.
- * Mostra un esempio di calcolo su 1.000 € incassati.
+ * Mostra un esempio di calcolo su 1.000 € fatturati.
  */
 
 import { useState, type FormEvent } from 'react';
@@ -17,7 +17,7 @@ import { formattaPercentuale, frazioneInTestoPercentuale, testoPercentualeInFraz
 import type { ImpostazioniFiscali, ModalitaCalcoloImposta } from '../../types/fiscale';
 import stili from './PaginaImpostazioni.module.css';
 
-const INCASSO_DI_ESEMPIO_CENTESIMI = 100000;
+const FATTURATO_DI_ESEMPIO_CENTESIMI = 100000;
 
 type ProprietaModulo = {
   impostazioniIniziali: ImpostazioniFiscali;
@@ -44,23 +44,13 @@ export function ModuloImpostazioniFiscali({ impostazioniIniziali, onSalvate }: P
         }
       : null;
 
-  // Nell'esempio si suppone di aver versato contributi pari alla stima INPS:
-  // così la modalità "al netto dei contributi" mostra davvero la deduzione.
-  const contributiDiEsempioCentesimi = valide
-    ? Math.round(
-        Math.round(INCASSO_DI_ESEMPIO_CENTESIMI * valide.coefficienteRedditivita) * valide.aliquotaContributiInps
-      )
-    : 0;
   const esempio = valide
-    ? calcolaRiepilogoFiscale(
-        { incassatoCentesimi: INCASSO_DI_ESEMPIO_CENTESIMI, contributiInpsVersatiCentesimi: contributiDiEsempioCentesimi },
-        valide
-      )
+    ? calcolaRiepilogoFiscale({ incassatoCentesimi: FATTURATO_DI_ESEMPIO_CENTESIMI, contributiInpsVersatiCentesimi: 0 }, valide)
     : null;
   // Imposta con l'altra modalità, per confronto
   const esempioAltraModalita = valide
     ? calcolaRiepilogoFiscale(
-        { incassatoCentesimi: INCASSO_DI_ESEMPIO_CENTESIMI, contributiInpsVersatiCentesimi: contributiDiEsempioCentesimi },
+        { incassatoCentesimi: FATTURATO_DI_ESEMPIO_CENTESIMI, contributiInpsVersatiCentesimi: 0 },
         { ...valide, modalitaCalcolo: valide.modalitaCalcolo === 'prudente' ? 'netto_inps' : 'prudente' }
       )
     : null;
@@ -136,7 +126,7 @@ export function ModuloImpostazioniFiscali({ impostazioniIniziali, onSalvate }: P
           <span>
             <strong>Prudente</strong>
             <span className={stili.descrizioneModalita}>
-              Imposta sul {coefficiente !== null ? formattaPercentuale(coefficiente) : 'coefficiente'} dell'incassato, senza
+              Imposta sul {coefficiente !== null ? formattaPercentuale(coefficiente) : 'coefficiente'} del fatturato, senza
               togliere i contributi INPS: accantoni un po' di più per stare larghi.
             </span>
           </span>
@@ -146,7 +136,7 @@ export function ModuloImpostazioniFiscali({ impostazioniIniziali, onSalvate }: P
           <span>
             <strong>Al netto dei contributi INPS</strong>
             <span className={stili.descrizioneModalita}>
-              Dal reddito si tolgono i contributi INPS versati, come previsto dalla norma.
+              Dal reddito si toglie la stima dei contributi INPS, calcolata in automatico con l'aliquota qui sotto.
             </span>
           </span>
         </label>
@@ -157,15 +147,14 @@ export function ModuloImpostazioniFiscali({ impostazioniIniziali, onSalvate }: P
         <input inputMode="decimal" value={testoInps} onChange={(evento) => setTestoInps(evento.target.value)} aria-invalid={aliquotaInps === null} />
         {aliquotaInps === null && <span className="campo__errore">Inserisci una percentuale tra 0 e 100.</span>}
         <span className="campo__aiuto">
-          Serve solo a stimare i contributi da mettere da parte (es. Gestione Separata). Verifica il valore con il tuo commercialista.
+          Serve a stimare i contributi da mettere da parte e, nella modalità al netto, quelli da togliere dal reddito (es. Gestione Separata). Verifica il valore con il tuo commercialista.
         </span>
       </label>
 
       {esempio && (
         <div className={stili.esempio}>
           <p className={stili.esempioTitolo}>
-            Esempio con {formattaCentesimiInEuro(INCASSO_DI_ESEMPIO_CENTESIMI)} incassati e{' '}
-            {formattaCentesimiInEuro(contributiDiEsempioCentesimi)} di contributi INPS versati
+            Esempio con {formattaCentesimiInEuro(FATTURATO_DI_ESEMPIO_CENTESIMI)} fatturati
           </p>
           <dl className={stili.esempioValori}>
             <div>

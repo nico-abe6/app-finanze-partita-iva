@@ -6,16 +6,16 @@
 
 /** Come calcolare la base imponibile */
 export type ModalitaCalcoloImposta =
-  | 'netto_inps'   // incassato × coefficiente − contributi INPS versati
-  | 'prudente';    // incassato × coefficiente, senza dedurre l'INPS
+  | 'netto_inps'   // (fatturato × coefficiente) − stima dei contributi INPS
+  | 'prudente';    // fatturato × coefficiente, senza togliere l'INPS
 
 /** Una riga per ogni mese di attività */
 export type FatturatoMensile = {
   id?: string;                       // uuid assegnato dal database
   anno: number;                      // es. 2026
   mese: number;                      // da 1 a 12
-  incassatoCentesimi: number;        // incassato nel mese (principio di cassa)
-  contributiInpsVersatiCentesimi: number;
+  incassatoCentesimi: number;        // fatturato del mese (importo delle fatture emesse)
+  contributiInpsVersatiCentesimi: number; // non più usato nei calcoli (sempre 0): l'INPS è stimato in automatico
   note?: string;                     // il ? vuol dire che è facoltativo
 };
 

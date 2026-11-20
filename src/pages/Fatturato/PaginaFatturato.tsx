@@ -1,7 +1,7 @@
 /**
  * PaginaFatturato.tsx
  * Inserimento del fatturato mese per mese: si sceglie l'anno, si tocca un mese
- * e si compilano incassato e contributi INPS versati. In cima i totali dell'anno.
+ * e si inserisce il fatturato: imposta, INPS e netto si calcolano da soli. In cima i totali dell'anno.
  */
 
 import { useState } from 'react';
@@ -53,7 +53,7 @@ export function PaginaFatturato() {
 
       <section className={stili.totali} aria-label={`Totali ${anno}`}>
         <div>
-          <p className={stili.totaleEtichetta}>Incassato {anno}</p>
+          <p className={stili.totaleEtichetta}>Fatturato {anno}</p>
           <p className={stili.totaleValore}>{formattaCentesimiInEuro(totaleAnno.incassatoCentesimi)}</p>
         </div>
         <div>
@@ -78,11 +78,7 @@ export function PaginaFatturato() {
                   {riga ? (
                     <>
                       <span className={stili.meseIncassato}>{formattaCentesimiInEuro(riga.incassatoCentesimi)}</span>
-                      {riga.contributiInpsVersatiCentesimi > 0 && (
-                        <span className={stili.meseDettaglio}>
-                          INPS versato {formattaCentesimiInEuro(riga.contributiInpsVersatiCentesimi)}
-                        </span>
-                      )}
+                      {riga.note && <span className={stili.meseDettaglio}>{riga.note}</span>}
                     </>
                   ) : (
                     <span className={stili.meseDettaglio}>Da inserire</span>

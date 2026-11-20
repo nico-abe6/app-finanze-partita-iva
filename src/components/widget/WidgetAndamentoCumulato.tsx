@@ -1,6 +1,6 @@
 /**
  * WidgetAndamentoCumulato.tsx
- * Widget: linee dell'incassato e del netto accumulati da gennaio
+ * Widget: linee del fatturato e del netto accumulati da gennaio
  * fino all'ultimo mese inserito dell'anno scelto.
  */
 
@@ -33,7 +33,7 @@ export function WidgetAndamentoCumulato({ righe, impostazioni, anno }: Proprieta
     <>
       <LegendaGrafico
         voci={[
-          { etichetta: 'Incassato cumulato', colore: COLORI_SERIE.incassato, forma: 'linea' },
+          { etichetta: 'Fatturato cumulato', colore: COLORI_SERIE.incassato, forma: 'linea' },
           { etichetta: 'Netto cumulato', colore: COLORI_SERIE.netto, forma: 'linea' },
         ]}
       />
@@ -47,7 +47,7 @@ export function WidgetAndamentoCumulato({ righe, impostazioni, anno }: Proprieta
               cursor={{ stroke: COLORI_STRUTTURA_GRAFICO.asse, strokeWidth: 1 }}
               content={<TooltipGrafico />}
             />
-            <Line dataKey="incassato" name="Incassato cumulato" stroke={COLORI_SERIE.incassato} {...PROPRIETA_LINEA} />
+            <Line dataKey="incassato" name="Fatturato cumulato" stroke={COLORI_SERIE.incassato} {...PROPRIETA_LINEA} />
             <Line dataKey="netto" name="Netto cumulato" stroke={COLORI_SERIE.netto} {...PROPRIETA_LINEA} />
           </LineChart>
         </ResponsiveContainer>

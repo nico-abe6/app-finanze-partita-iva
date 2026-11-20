@@ -1,7 +1,7 @@
 /**
  * RiquadriRiepilogo.tsx
- * Quattro riquadri numerici (netto, incassato, imposta, INPS) con la barra
- * che mostra come si divide l'incassato. Usato da "Riepilogo dell'anno" e "Totale dall'inizio".
+ * Quattro riquadri numerici (netto, fatturato, imposta, INPS) con la barra
+ * che mostra come si divide il fatturato. Usato da "Riepilogo dell'anno" e "Totale dall'inizio".
  */
 
 import { COLORI_SERIE } from '../../config/coloriGrafici';
@@ -22,7 +22,7 @@ function percentuale(parte: number, totale: number): number {
 
 export function RiquadriRiepilogo({ riepilogo, largo }: ProprietaRiquadri) {
   const totale = riepilogo.incassatoCentesimi;
-  // Il netto può essere negativo se le tasse superano l'incassato: la barra mostra solo valori positivi
+  // Il netto può essere negativo se le tasse superano il fatturato: la barra mostra solo valori positivi
   const parti = [
     { etichetta: 'Netto stimato', valore: Math.max(0, riepilogo.nettoStimatoCentesimi), colore: COLORI_SERIE.netto },
     { etichetta: 'INPS stimato', valore: riepilogo.contributiInpsStimatiCentesimi, colore: COLORI_SERIE.inps },
@@ -38,7 +38,7 @@ export function RiquadriRiepilogo({ riepilogo, largo }: ProprietaRiquadri) {
         </div>
         <div className={stili.secondari}>
         <div className={stili.riquadro}>
-          <p className={stili.riquadroEtichetta}>Incassato</p>
+          <p className={stili.riquadroEtichetta}>Fatturato</p>
           <p className={stili.riquadroValore}>{formattaCentesimiInEuro(riepilogo.incassatoCentesimi)}</p>
         </div>
         <div className={stili.riquadro}>

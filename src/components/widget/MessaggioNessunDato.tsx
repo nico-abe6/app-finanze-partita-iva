@@ -8,7 +8,7 @@ import { Link } from 'react-router';
 import stili from './Widget.module.css';
 
 const DESTINAZIONI = {
-  fatturato: { percorso: '/fatturato', testo: 'Inseriscilo dalla pagina Fatturato', cosa: 'Nessun incasso registrato' },
+  fatturato: { percorso: '/fatturato', testo: 'Inseriscilo dalla pagina Fatturato', cosa: 'Nessun fatturato registrato' },
   conti: { percorso: '/conti', testo: 'Aggiungili dalla pagina Conti', cosa: 'Nessun movimento registrato' },
   contiVuoti: { percorso: '/conti', testo: 'Crea il primo dalla pagina Conti', cosa: 'Nessun conto' },
 } as const;

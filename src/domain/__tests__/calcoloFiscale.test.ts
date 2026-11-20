@@ -45,24 +45,34 @@ describe('calcolaRiepilogoFiscale', () => {
     expect(risultato.impostaSostitutivaCentesimi).toBe(3900);
   });
 
-  it('modalità netto INPS: deduce i contributi versati', () => {
+  it('modalità netto INPS: toglie in automatico la stima dei contributi', () => {
     const risultato = calcolaRiepilogoFiscale(
-      { incassatoCentesimi: 100000, contributiInpsVersatiCentesimi: 20000 },
+      { incassatoCentesimi: 100000, contributiInpsVersatiCentesimi: 0 },
       impostazioniNettoInps
     );
-    expect(risultato.baseImponibileCentesimi).toBe(58000);
-    expect(risultato.impostaSostitutivaCentesimi).toBe(2900);
-    expect(risultato.nettoStimatoCentesimi).toBe(76765);
+    // reddito 780 € - INPS stimato 203,35 € = base 576,65 €; imposta 5% = 28,83 €
+    expect(risultato.baseImponibileCentesimi).toBe(57665);
+    expect(risultato.impostaSostitutivaCentesimi).toBe(2883);
+    expect(risultato.nettoStimatoCentesimi).toBe(76782);
+  });
+
+  it('modalità netto INPS: ignora eventuali contributi versati salvati in passato', () => {
+    const risultato = calcolaRiepilogoFiscale(
+      { incassatoCentesimi: 100000, contributiInpsVersatiCentesimi: 99999 },
+      impostazioniNettoInps
+    );
+    expect(risultato.baseImponibileCentesimi).toBe(57665);
   });
 
   it('la base imponibile non scende mai sotto zero', () => {
+    // caso limite: aliquota INPS al 100%, la deduzione è pari a tutto il reddito
     const risultato = calcolaRiepilogoFiscale(
-      { incassatoCentesimi: 10000, contributiInpsVersatiCentesimi: 20000 },
-      impostazioniNettoInps
+      { incassatoCentesimi: 10000, contributiInpsVersatiCentesimi: 0 },
+      { ...impostazioniNettoInps, aliquotaContributiInps: 1 }
     );
     expect(risultato.baseImponibileCentesimi).toBe(0);
     expect(risultato.impostaSostitutivaCentesimi).toBe(0);
-    expect(risultato.nettoStimatoCentesimi).toBe(7967);
+    expect(risultato.nettoStimatoCentesimi).toBe(2200);
   });
 
   it('nessun incasso: tutto a zero', () => {

@@ -1,7 +1,7 @@
 /**
  * ModuloMese.tsx
- * Form per inserire o modificare l'incassato e i contributi INPS versati di un mese.
- * Mostra in anteprima la stima di imposta, INPS e netto del mese.
+ * Form per inserire o modificare il fatturato di un mese (l'importo delle fatture emesse).
+ * Imposta, contributi INPS e netto vengono calcolati in automatico e mostrati in anteprima.
  */
 
 import { useState, type FormEvent } from 'react';
@@ -17,20 +17,13 @@ type ProprietaModuloMese = {
   mese: number;
   rigaEsistente?: FatturatoMensile;
   impostazioni: ImpostazioniFiscali;
-  onFatto: () => void;    // dopo salvataggio o eliminazione riusciti
+  onFatto: () => void; // dopo salvataggio o eliminazione riusciti
   onAnnulla: () => void;
 };
 
-const MESSAGGIO_IMPORTO_NON_VALIDO = 'Importo non valido (es. 1250,50).';
-
 export function ModuloMese({ anno, mese, rigaEsistente, impostazioni, onFatto, onAnnulla }: ProprietaModuloMese) {
-  const [testoIncassato, setTestoIncassato] = useState(
+  const [testoFatturato, setTestoFatturato] = useState(
     rigaEsistente ? centesimiInTestoModificabile(rigaEsistente.incassatoCentesimi) : ''
-  );
-  const [testoContributi, setTestoContributi] = useState(
-    rigaEsistente && rigaEsistente.contributiInpsVersatiCentesimi > 0
-      ? centesimiInTestoModificabile(rigaEsistente.contributiInpsVersatiCentesimi)
-      : ''
   );
   const [note, setNote] = useState(rigaEsistente?.note ?? '');
   const [inCorso, setInCorso] = useState(false);
@@ -38,22 +31,16 @@ export function ModuloMese({ anno, mese, rigaEsistente, impostazioni, onFatto, o
   const [errore, setErrore] = useState<string | null>(null);
   const [tentatoInvio, setTentatoInvio] = useState(false);
 
-  const incassatoCentesimi = convertiTestoInCentesimi(testoIncassato);
-  // campo contributi vuoto = 0
-  const contributiCentesimi = testoContributi.trim() === '' ? 0 : convertiTestoInCentesimi(testoContributi);
-  const valoriValidi = incassatoCentesimi !== null && contributiCentesimi !== null;
-
-  const anteprima = valoriValidi
-    ? calcolaRiepilogoFiscale(
-        { incassatoCentesimi, contributiInpsVersatiCentesimi: contributiCentesimi },
-        impostazioni
-      )
-    : null;
+  const fatturatoCentesimi = convertiTestoInCentesimi(testoFatturato);
+  const anteprima =
+    fatturatoCentesimi !== null
+      ? calcolaRiepilogoFiscale({ incassatoCentesimi: fatturatoCentesimi, contributiInpsVersatiCentesimi: 0 }, impostazioni)
+      : null;
 
   async function gestisciInvio(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault();
     setTentatoInvio(true);
-    if (incassatoCentesimi === null || contributiCentesimi === null) return;
+    if (fatturatoCentesimi === null) return;
 
     setInCorso(true);
     setErrore(null);
@@ -61,8 +48,8 @@ export function ModuloMese({ anno, mese, rigaEsistente, impostazioni, onFatto, o
       await salvaFatturatoMensile({
         anno,
         mese,
-        incassatoCentesimi,
-        contributiInpsVersatiCentesimi: contributiCentesimi,
+        incassatoCentesimi: fatturatoCentesimi,
+        contributiInpsVersatiCentesimi: 0,
         note,
       });
       onFatto();
@@ -91,38 +78,28 @@ export function ModuloMese({ anno, mese, rigaEsistente, impostazioni, onFatto, o
   return (
     <form className={stili.modulo} onSubmit={gestisciInvio} noValidate>
       <label className="campo">
-        Incassato nel mese (€)
+        Fatturato nel mese (€)
         <input
           inputMode="decimal"
           autoComplete="off"
           placeholder="0,00"
-          value={testoIncassato}
-          onChange={(evento) => setTestoIncassato(evento.target.value)}
-          aria-invalid={tentatoInvio && incassatoCentesimi === null}
+          value={testoFatturato}
+          onChange={(evento) => setTestoFatturato(evento.target.value)}
+          aria-invalid={tentatoInvio && fatturatoCentesimi === null}
           autoFocus
         />
-        {tentatoInvio && incassatoCentesimi === null && (
-          <span className="campo__errore">{MESSAGGIO_IMPORTO_NON_VALIDO}</span>
+        {tentatoInvio && fatturatoCentesimi === null && (
+          <span className="campo__errore">Importo non valido (es. 1250,50).</span>
         )}
-        <span className="campo__aiuto">Conta ciò che hai incassato nel mese, non ciò che hai fatturato.</span>
-      </label>
-
-      <label className="campo">
-        Contributi INPS versati nel mese (€)
-        <input
-          inputMode="decimal"
-          autoComplete="off"
-          placeholder="0,00"
-          value={testoContributi}
-          onChange={(evento) => setTestoContributi(evento.target.value)}
-          aria-invalid={contributiCentesimi === null}
-        />
-        {contributiCentesimi === null && <span className="campo__errore">{MESSAGGIO_IMPORTO_NON_VALIDO}</span>}
+        <span className="campo__aiuto">
+          Il totale delle fatture emesse nel mese. Le tasse si pagano su ciò che incassi: se un cliente paga in un mese
+          diverso, inserisci l'importo nel mese del pagamento.
+        </span>
       </label>
 
       <label className="campo">
         Note
-        <textarea rows={2} value={note} onChange={(evento) => setNote(evento.target.value)} />
+        <textarea rows={2} value={note} onChange={(evento) => setNote(evento.target.value)} placeholder="es. numeri delle fatture, clienti" />
       </label>
 
       {anteprima && anteprima.incassatoCentesimi > 0 && (

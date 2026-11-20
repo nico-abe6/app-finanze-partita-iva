@@ -26,21 +26,21 @@ export const TITOLI_GRUPPI_WIDGET: Record<GruppoWidget, string> = {
 export const CATALOGO_WIDGET: Record<TipoWidget, VoceCatalogoWidget> = {
   riepilogo_anno: {
     titolo: "Riepilogo dell'anno",
-    descrizione: 'Incassato, imposta, INPS e netto stimato dell\'anno scelto.',
+    descrizione: 'Fatturato, imposta, INPS e netto stimato dell\'anno scelto.',
     larghezza: 'intera',
     usaAnnoScelto: true,
     gruppo: 'partita_iva',
   },
   grafico_mensile: {
     titolo: 'Composizione mese per mese',
-    descrizione: 'Colonne mensili dell\'incassato divise in netto, INPS e imposta.',
+    descrizione: 'Colonne mensili del fatturato divise in netto, INPS e imposta.',
     larghezza: 'intera',
     usaAnnoScelto: true,
     gruppo: 'partita_iva',
   },
   andamento_cumulato: {
     titolo: 'Andamento progressivo',
-    descrizione: 'Incassato e netto accumulati da gennaio.',
+    descrizione: 'Fatturato e netto accumulati da gennaio.',
     larghezza: 'mezza',
     usaAnnoScelto: true,
     gruppo: 'partita_iva',
@@ -61,7 +61,7 @@ export const CATALOGO_WIDGET: Record<TipoWidget, VoceCatalogoWidget> = {
   },
   grafico_annuale: {
     titolo: 'Confronto tra anni',
-    descrizione: 'Incassato e netto stimato anno per anno.',
+    descrizione: 'Fatturato e netto stimato anno per anno.',
     larghezza: 'mezza',
     usaAnnoScelto: false,
     gruppo: 'partita_iva',
