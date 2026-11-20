@@ -1,0 +1,32 @@
+# mantieni-attivo.yml
+# Ogni 2 giorni chiama la funzione "segnale_attivita" del database Supabase
+# (database/migrations/004_segnale_attivita.sql) così il progetto gratuito
+# non viene messo in pausa dopo 7 giorni senza utilizzo.
+# Usa le stesse variabili del repository del workflow di pubblicazione:
+#   VITE_SUPABASE_URL e VITE_SUPABASE_PUBLISHABLE_KEY.
+# Nota: nei repository pubblici GitHub sospende i workflow pianificati dopo 60 giorni
+# senza nuovi commit; in quel caso manda un'email e basta riattivarlo dalla scheda Actions.
+
+name: Mantieni attivo Supabase
+
+on:
+  schedule:
+    - cron: '17 6 */2 * *' # alle 06:17 UTC, un giorno sì e uno no
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  segnale:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Chiama la funzione segnale_attivita
+        env:
+          URL_SUPABASE: ${{ vars.VITE_SUPABASE_URL }}
+          CHIAVE_PUBBLICA: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          curl --fail --silent --show-error \
+            --request POST "$URL_SUPABASE/rest/v1/rpc/segnale_attivita" \
+            --header "apikey: $CHIAVE_PUBBLICA" \
+            --header "Content-Type: application/json" \
+            --data '{}'
