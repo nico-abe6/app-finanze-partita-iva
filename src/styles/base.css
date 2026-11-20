@@ -10,14 +10,18 @@
   box-sizing: border-box;
 }
 
+/* La sfumatura sta su html così copre tutta la pagina, anche quando è più lunga dello schermo */
+html {
+  min-height: 100%;
+  background: var(--sfondo-pagina);
+}
+
 body {
   margin: 0;
   min-height: 100dvh;
   font-family: var(--font-base);
   font-size: var(--dimensione-testo);
   color: var(--colore-testo);
-  background: var(--sfondo-pagina);
-  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
 }

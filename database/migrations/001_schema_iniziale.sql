@@ -2,6 +2,7 @@
 -- Schema iniziale: fatturato mensile, impostazioni fiscali, conti, movimenti.
 -- Importi in centesimi (bigint). Ogni riga appartiene a un utente (user_id)
 -- e la Row Level Security fa vedere a ciascun utente solo i propri dati.
+-- (Già eseguito su Supabase il 20/11/2026: questo file serve come riferimento.)
 
 -- Fatturato: una riga per mese per utente
 create table public.fatturato_mensile (

@@ -4,7 +4,12 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { convertiTestoInCentesimi, formattaCentesimiInEuro } from '../importi';
+import {
+  centesimiInTestoModificabile,
+  convertiTestoInCentesimi,
+  formattaCentesimiInEuro,
+  formattaEuroPerAsse,
+} from '../importi';
 
 // Intl mette uno spazio "non separabile" (\u00a0) tra numero e simbolo €
 const SPAZIO = '\u00a0';
@@ -46,4 +51,21 @@ describe('convertiTestoInCentesimi', () => {
       expect(convertiTestoInCentesimi(testo)).toBeNull();
     }
   );
+});
+describe('formattaEuroPerAsse', () => {
+  it('numeri pieni sotto 10 000, compatti sopra', () => {
+    expect(formattaEuroPerAsse(0)).toBe('0');
+    expect(formattaEuroPerAsse(2500)).toBe('2.500');
+    expect(formattaEuroPerAsse(12000)).toBe('12K');
+    expect(formattaEuroPerAsse(2500000)).toBe('2,5 Mln');
+  });
+});
+
+describe('centesimiInTestoModificabile', () => {
+  it('produce un testo che convertiTestoInCentesimi rilegge uguale', () => {
+    for (const centesimi of [0, 5, 125050, 123456789]) {
+      expect(convertiTestoInCentesimi(centesimiInTestoModificabile(centesimi))).toBe(centesimi);
+    }
+    expect(centesimiInTestoModificabile(125050)).toBe('1250,50');
+  });
 });

@@ -1,0 +1,141 @@
+/**
+ * componenti.css
+ * Classi riutilizzabili in tutte le pagine: intestazione di pagina, bottoni, campi, messaggi.
+ * Colori e misure da variabili.css.
+ */
+
+/* ---------- Intestazione di pagina ---------- */
+
+.intestazione-pagina {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spazio-3);
+  margin-bottom: var(--spazio-6);
+}
+
+.intestazione-pagina h1 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.intestazione-pagina__azioni {
+  display: flex;
+  align-items: center;
+  gap: var(--spazio-2);
+}
+
+/* ---------- Bottoni ---------- */
+
+.bottone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spazio-2);
+  min-height: 2.5rem;
+  padding: var(--spazio-2) var(--spazio-4);
+  border: 1px solid var(--colore-bordo);
+  border-radius: 999px;
+  background: var(--colore-superficie);
+  color: var(--colore-testo);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, filter 0.2s ease;
+}
+
+.bottone:hover {
+  background: #f6f4fd;
+}
+
+.bottone:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.bottone--primario {
+  border-color: transparent;
+  background: var(--gradiente-accento);
+}
+
+.bottone--primario:hover {
+  background: var(--gradiente-accento);
+  filter: brightness(0.96);
+}
+
+.bottone--pericolo {
+  color: var(--colore-errore);
+}
+
+.bottone--icona {
+  width: 2.5rem;
+  padding: 0;
+}
+
+.bottone svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* ---------- Campi dei form ---------- */
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-1);
+  font-size: 0.9rem;
+  color: var(--colore-testo-secondario);
+}
+
+.campo input,
+.campo textarea,
+.campo select {
+  padding: var(--spazio-3);
+  border: 1px solid var(--colore-bordo);
+  border-radius: var(--raggio);
+  background: #fbfaff;
+  color: var(--colore-testo);
+  font-size: var(--dimensione-testo);
+}
+
+.campo input:focus-visible,
+.campo textarea:focus-visible,
+.campo select:focus-visible {
+  outline: none;
+  border-color: var(--colore-focus);
+  box-shadow: 0 0 0 3px var(--pastello-violetto);
+}
+
+.campo__errore {
+  color: var(--colore-errore);
+}
+
+.campo__aiuto {
+  font-size: 0.8rem;
+}
+
+/* ---------- Messaggi ---------- */
+
+.messaggio {
+  padding: var(--spazio-3) var(--spazio-4);
+  border-radius: var(--raggio);
+  background: var(--colore-superficie);
+  box-shadow: var(--ombra-morbida);
+}
+
+.messaggio--errore {
+  border-left: 4px solid var(--colore-errore);
+}
+
+.messaggio--avviso {
+  border-left: 4px solid var(--colore-ho-bisogno);
+}
+
+.testo-secondario {
+  color: var(--colore-testo-secondario);
+}
+
+/* Numeri allineati in colonna (tabelle) */
+.numeri-tabellari {
+  font-variant-numeric: tabular-nums;
+}

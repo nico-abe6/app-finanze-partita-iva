@@ -24,7 +24,7 @@ export type TipoSpesa =
     | 'voglio';
 
 export type Conto = {
-    id?: number;
+    id?: string;
     nomeConto: string;
     tipoConto: TipoConto;
     saldoInizialeCentesimi: number;
@@ -32,15 +32,15 @@ export type Conto = {
 };
 
 export type Movimento = {
-    id?: number;
+    id?: string;
     tipo: TipoMovimento;
-    contoId: number;
+    contoId: string;
     data: string;
     importoCentesimi: number;
     etichette: string[];
     priorita?: TipoSpesa;
     descrizione?: string;
-    contoDestinazioneId?: number; 
+    contoDestinazioneId?: string;
 };
 
 

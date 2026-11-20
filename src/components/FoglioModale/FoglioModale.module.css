@@ -1,0 +1,52 @@
+/**
+ * FoglioModale.module.css
+ * Telefono: foglio ancorato in basso con angoli superiori arrotondati.
+ * Schermo grande: finestra centrata.
+ */
+
+.dialog {
+  width: 100%;
+  max-width: 100%;
+  max-height: 90dvh;
+  margin: auto auto 0;
+  padding: 0;
+  border: none;
+  border-radius: var(--raggio-grande) var(--raggio-grande) 0 0;
+  background: var(--colore-superficie);
+  color: var(--colore-testo);
+  box-shadow: var(--ombra-menu);
+}
+
+.dialog::backdrop {
+  background: rgb(43 45 66 / 0.35);
+  backdrop-filter: blur(2px);
+}
+
+.contenuto {
+  padding: var(--spazio-4) var(--spazio-4) calc(var(--spazio-6) + env(safe-area-inset-bottom));
+}
+
+.intestazione {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spazio-3);
+  margin-bottom: var(--spazio-4);
+}
+
+.titolo {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+@media (min-width: 48rem) {
+  .dialog {
+    max-width: 30rem;
+    margin: auto;
+    border-radius: var(--raggio-grande);
+  }
+
+  .contenuto {
+    padding: var(--spazio-6);
+  }
+}

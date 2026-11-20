@@ -1,0 +1,180 @@
+/**
+ * Widget.module.css
+ * Stile condiviso dai contenuti dei widget: riquadri numerici, barra di composizione, tabelle.
+ */
+
+/* ---------- Riquadri numerici ----------
+ * Telefono e widget a mezza riga: riquadro grande del netto, sotto le altre voci come righe.
+ * Widget a riga intera su schermo grande: quattro riquadri affiancati.
+ */
+
+.riquadri {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-2);
+}
+
+.riquadroPrincipale {
+  padding: var(--spazio-3) var(--spazio-4);
+  border-radius: var(--raggio);
+  background: linear-gradient(120deg, rgb(191 232 211 / 0.45), rgb(196 228 247 / 0.45), rgb(221 210 247 / 0.45));
+}
+
+.riquadroEtichetta {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--colore-testo-secondario);
+}
+
+.riquadroValore {
+  margin: 0;
+  font-weight: 650;
+}
+
+.riquadroPrincipale .riquadroValore {
+  margin-top: var(--spazio-1);
+  font-size: 2rem;
+}
+
+.secondari {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--spazio-1);
+}
+
+.secondari .riquadro {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spazio-3);
+  padding: var(--spazio-2) 0;
+}
+
+.secondari .riquadro + .riquadro {
+  border-top: 1px solid #f1eff8;
+}
+
+@media (min-width: 48rem) {
+  .riquadri4 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--spazio-3);
+  }
+
+  .riquadri4 .secondari {
+    display: contents;
+  }
+
+  .riquadri4 .secondari .riquadro,
+  .riquadri4 .riquadroPrincipale {
+    display: block;
+    padding: var(--spazio-3);
+    border-radius: var(--raggio);
+  }
+
+  .riquadri4 .secondari .riquadro {
+    border-top: none;
+    background: #faf9fe;
+  }
+
+  .riquadri4 .riquadroValore {
+    margin-top: var(--spazio-1);
+    font-size: 1.15rem;
+  }
+
+  .riquadri4 .riquadroPrincipale .riquadroValore {
+    font-size: 1.5rem;
+  }
+}
+
+/* ---------- Barra di composizione (netto / INPS / imposta) ---------- */
+
+.barraComposizione {
+  display: flex;
+  gap: 2px;
+  height: 0.5rem;
+  margin: var(--spazio-4) 0 var(--spazio-2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.barraComposizione span {
+  height: 100%;
+}
+
+.barraComposizione span:first-child {
+  border-radius: 999px 0 0 999px;
+}
+
+.barraComposizione span:last-child {
+  border-radius: 0 999px 999px 0;
+}
+
+/* ---------- Tabelle ---------- */
+
+.contenitoreTabella {
+  overflow-x: auto;
+  margin: 0 calc(-1 * var(--spazio-2));
+}
+
+.tabella {
+  width: 100%;
+  min-width: 34rem;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabella th,
+.tabella td {
+  padding: var(--spazio-2);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.tabella th:first-child,
+.tabella td:first-child {
+  position: sticky;
+  left: 0;
+  text-align: left;
+  background: var(--colore-superficie);
+}
+
+.tabella thead th {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--colore-testo-secondario);
+  border-bottom: 1px solid var(--colore-bordo);
+}
+
+.tabella tbody tr + tr td {
+  border-top: 1px solid #f1eff8;
+}
+
+.rigaVuota td {
+  color: #b3b1c4;
+}
+
+.tabella tfoot td {
+  font-weight: 650;
+  border-top: 2px solid var(--colore-bordo);
+}
+
+.colonnaNetto {
+  font-weight: 600;
+}
+
+.notaTabella {
+  margin: var(--spazio-3) 0 0;
+  font-size: 0.8rem;
+  color: var(--colore-testo-secondario);
+}
+
+/* ---------- Nessun dato ---------- */
+
+.vuoto {
+  margin: 0;
+  padding: var(--spazio-6) var(--spazio-2);
+  text-align: center;
+  color: var(--colore-testo-secondario);
+}

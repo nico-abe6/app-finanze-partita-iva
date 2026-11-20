@@ -20,6 +20,42 @@ export function formattaCentesimiInEuro(centesimi: number): string {
   return formattatoreValuta.format(centesimi / 100);
 }
 
+// Per i campi dei form: due decimali, separatore della lingua, senza migliaia né simbolo
+const formattatoreCampo = new Intl.NumberFormat(LOCALE_IMPORTI, {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+  useGrouping: false,
+});
+
+/**
+ * Testo da mettere in un campo da modificare, es. 125050 -> "1250,50".
+ * Il risultato è sempre rileggibile da convertiTestoInCentesimi.
+ */
+export function centesimiInTestoModificabile(centesimi: number): string {
+  return formattatoreCampo.format(centesimi / 100);
+}
+
+// Per gli assi dei grafici: numeri interi, in forma compatta da 10 000 in su (12K, 2,5 Mln)
+const formattatoreAssePieno = new Intl.NumberFormat(LOCALE_IMPORTI, {
+  maximumFractionDigits: 0,
+  useGrouping: 'always',
+});
+const formattatoreAsseCompatto = new Intl.NumberFormat(LOCALE_IMPORTI, {
+  notation: 'compact',
+  maximumFractionDigits: 1,
+});
+const SOGLIA_FORMA_COMPATTA = 10000;
+
+/**
+ * Etichetta per l'asse di un grafico, in euro senza simbolo (l'unità è nel titolo dell'asse).
+ * Es. 2500 -> "2.500", 12000 -> "12K".
+ */
+export function formattaEuroPerAsse(euro: number): string {
+  return Math.abs(euro) >= SOGLIA_FORMA_COMPATTA
+    ? formattatoreAsseCompatto.format(euro)
+    : formattatoreAssePieno.format(euro);
+}
+
 // Parte intera valida: solo cifre (1250) oppure gruppi da tre separati da punto (1.250.000)
 const FORMATO_PARTE_INTERA = /^(\d+|\d{1,3}(\.\d{3})+)$/;
 // Parte decimale valida: una o due cifre

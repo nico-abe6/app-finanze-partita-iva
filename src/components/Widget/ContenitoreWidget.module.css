@@ -1,0 +1,56 @@
+/**
+ * ContenitoreWidget.module.css
+ * Card dei widget. Su schermo grande i widget "interi" occupano tutta la riga.
+ */
+
+.widget {
+  min-width: 0; /* permette a tabelle e grafici di restringersi dentro la griglia */
+  padding: var(--spazio-4);
+  border-radius: var(--raggio-grande);
+  background: var(--colore-superficie);
+  box-shadow: var(--ombra-morbida);
+}
+
+.inModifica {
+  outline: 2px dashed var(--pastello-violetto);
+  outline-offset: 2px;
+}
+
+.intestazione {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spazio-3);
+  margin-bottom: var(--spazio-3);
+}
+
+.titolo {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.sottotitolo {
+  margin: var(--spazio-1) 0 0;
+  font-size: 0.85rem;
+  color: var(--colore-testo-secondario);
+}
+
+.comandi {
+  display: flex;
+  gap: var(--spazio-1);
+  flex-shrink: 0;
+}
+
+.corpo {
+  min-width: 0;
+}
+
+@media (min-width: 48rem) {
+  .widget {
+    padding: var(--spazio-6);
+  }
+
+  .intera {
+    grid-column: 1 / -1;
+  }
+}

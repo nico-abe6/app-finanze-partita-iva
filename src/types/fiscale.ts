@@ -11,7 +11,7 @@ export type ModalitaCalcoloImposta =
 
 /** Una riga per ogni mese di attività */
 export type FatturatoMensile = {
-  id?: number;                       // lo assegna il database
+  id?: string;                       // uuid assegnato dal database
   anno: number;                      // es. 2026
   mese: number;                      // da 1 a 12
   incassatoCentesimi: number;        // incassato nel mese (principio di cassa)
@@ -41,4 +41,16 @@ export type RiepilogoFiscale = {
   impostaSostitutivaCentesimi: number;
   contributiInpsStimatiCentesimi: number;
   nettoStimatoCentesimi: number;
+};
+/** Riepilogo fiscale di un singolo mese di un anno */
+export type RiepilogoMese = {
+  mese: number;          // da 1 a 12
+  haDati: boolean;       // false se il mese non è stato inserito
+  riepilogo: RiepilogoFiscale;
+};
+
+/** Riepilogo fiscale di un anno intero (il valore che fa fede) */
+export type RiepilogoAnno = {
+  anno: number;
+  riepilogo: RiepilogoFiscale;
 };

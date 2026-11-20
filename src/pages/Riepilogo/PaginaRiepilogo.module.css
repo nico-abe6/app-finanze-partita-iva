@@ -1,0 +1,85 @@
+/**
+ * PaginaRiepilogo.module.css
+ * Griglia dei widget: una colonna su telefono, due su schermo grande.
+ */
+
+.griglia {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--spazio-4);
+}
+
+@media (min-width: 48rem) {
+  .griglia {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spazio-6);
+  }
+}
+
+.avviso {
+  margin: 0 0 var(--spazio-4);
+}
+
+.aggiungi {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spazio-2);
+  min-height: 6rem;
+  border: 2px dashed var(--pastello-violetto);
+  border-radius: var(--raggio-grande);
+  background: rgb(255 255 255 / 0.5);
+  color: var(--scuro-violetto);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.aggiungi:hover {
+  background: rgb(255 255 255 / 0.85);
+}
+
+.aggiungi svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.catalogo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.voceCatalogo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-1);
+  width: 100%;
+  padding: var(--spazio-3) var(--spazio-4);
+  border: 1px solid var(--colore-bordo);
+  border-radius: var(--raggio);
+  background: var(--colore-superficie);
+  text-align: left;
+  cursor: pointer;
+}
+
+.voceCatalogo:hover:not(:disabled) {
+  border-color: var(--colore-focus);
+  background: #faf8ff;
+}
+
+.voceCatalogo:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.voceCatalogoTitolo {
+  font-weight: 600;
+}
+
+.voceCatalogoDescrizione {
+  font-size: 0.85rem;
+  color: var(--colore-testo-secondario);
+}

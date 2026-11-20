@@ -1,0 +1,136 @@
+/**
+ * PaginaFatturato.module.css
+ * Totali dell'anno, elenco dei 12 mesi e form del mese.
+ */
+
+.totali {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spazio-3);
+  margin-bottom: var(--spazio-6);
+  padding: var(--spazio-4);
+  border-radius: var(--raggio-grande);
+  background: linear-gradient(120deg, rgb(191 232 211 / 0.55), rgb(196 228 247 / 0.55), rgb(221 210 247 / 0.55));
+}
+
+.totaleEtichetta {
+  margin: 0 0 var(--spazio-1);
+  font-size: 0.85rem;
+  color: var(--colore-testo-secondario);
+}
+
+.totaleValore {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 650;
+}
+
+/* ---------- Elenco mesi ---------- */
+
+.elencoMesi {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--spazio-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 48rem) {
+  .elencoMesi {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--spazio-3);
+  }
+}
+
+.mese {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spazio-3);
+  width: 100%;
+  min-height: 3.75rem;
+  padding: var(--spazio-3) var(--spazio-4);
+  border: 1px solid transparent;
+  border-radius: var(--raggio);
+  background: rgb(255 255 255 / 0.65);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.mese:hover {
+  background: var(--colore-superficie);
+  border-color: var(--colore-bordo);
+}
+
+.meseCompilato {
+  background: var(--colore-superficie);
+  box-shadow: var(--ombra-morbida);
+  border-left: 4px solid var(--pastello-verde);
+}
+
+.meseFuturo:not(.meseCompilato) {
+  opacity: 0.6;
+}
+
+.meseNome {
+  font-weight: 600;
+}
+
+.meseValori {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.meseIncassato {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.meseDettaglio {
+  font-size: 0.8rem;
+  color: var(--colore-testo-secondario);
+}
+
+/* ---------- Form del mese ---------- */
+
+.modulo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-4);
+}
+
+.anteprima {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spazio-2);
+  margin: 0;
+  padding: var(--spazio-3);
+  border-radius: var(--raggio);
+  background: #faf9fe;
+}
+
+.anteprima dt {
+  font-size: 0.75rem;
+  color: var(--colore-testo-secondario);
+}
+
+.anteprima dd {
+  margin: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.azioniModulo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spazio-2);
+}
+
+.spaziatore {
+  flex: 1;
+}

@@ -1,0 +1,76 @@
+/**
+ * Grafici.module.css
+ * Stile comune a legende, tooltip e contenitori dei grafici.
+ */
+
+.legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spazio-2) var(--spazio-4);
+  margin: 0 0 var(--spazio-3);
+  padding: 0;
+  list-style: none;
+  font-size: 0.85rem;
+  color: var(--colore-testo-secondario);
+}
+
+.voceLegenda {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spazio-2);
+}
+
+.simboloRettangolo {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 3px;
+}
+
+.simboloLinea {
+  width: 1rem;
+  height: 2px;
+  border-radius: 1px;
+}
+
+.tooltip {
+  min-width: 11rem;
+  padding: var(--spazio-2) var(--spazio-3);
+  border: 1px solid var(--colore-bordo);
+  border-radius: var(--raggio);
+  background: var(--colore-superficie);
+  box-shadow: var(--ombra-morbida);
+  font-size: 0.85rem;
+}
+
+.tooltipTitolo {
+  margin: 0 0 var(--spazio-1);
+  font-weight: 600;
+}
+
+.tooltipRiga {
+  display: flex;
+  align-items: center;
+  gap: var(--spazio-2);
+  margin: 0.15rem 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.tooltipChiave {
+  width: 0.75rem;
+  height: 2px;
+  border-radius: 1px;
+}
+
+.tooltipNome {
+  color: var(--colore-testo-secondario);
+}
+
+.areaGrafico {
+  width: 100%;
+  height: 17rem;
+}
+
+.areaGrafico:focus,
+.areaGrafico :global(.recharts-surface):focus {
+  outline: none;
+}

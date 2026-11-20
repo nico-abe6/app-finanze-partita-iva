@@ -1,0 +1,45 @@
+/**
+ * SelettoreAnno.module.css
+ * Pillola bianca con frecce e anno al centro.
+ */
+
+.selettore {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spazio-1);
+  padding: var(--spazio-1);
+  border-radius: 999px;
+  background: var(--colore-superficie);
+  box-shadow: var(--ombra-morbida);
+}
+
+.freccia {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--colore-testo-secondario);
+  cursor: pointer;
+}
+
+.freccia:hover:not(:disabled) {
+  background: var(--pastello-violetto);
+  color: var(--scuro-violetto);
+}
+
+.freccia:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.menu {
+  border: none;
+  background: transparent;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  padding: var(--spazio-1) var(--spazio-2);
+  cursor: pointer;
+}
