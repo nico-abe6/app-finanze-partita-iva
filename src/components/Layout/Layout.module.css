@@ -1,0 +1,113 @@
+/**
+ * Layout.module.css
+ * Pagina con contenuto centrato e menu "flottante" a icone in basso,
+ * uguale su telefono e PC. Colori e misure da variabili.css.
+ */
+
+.layout {
+  min-height: 100dvh;
+}
+
+.contenuto {
+  max-width: var(--larghezza-contenuto-max);
+  margin: 0 auto;
+  padding: var(--spazio-6) var(--spazio-4);
+  /* spazio in fondo per non finire sotto il menu */
+  padding-bottom: calc(var(--altezza-menu) + var(--spazio-8) + env(safe-area-inset-bottom));
+}
+
+/* ---------- Menu in basso ---------- */
+
+.menu {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--spazio-3) + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: calc(100% - 2 * var(--spazio-4));
+  max-width: var(--larghezza-menu-max);
+  height: var(--altezza-menu);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 var(--spazio-2);
+  background: rgb(255 255 255 / 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgb(255 255 255 / 0.9);
+  border-radius: var(--raggio-grande);
+  box-shadow: var(--ombra-menu);
+}
+
+/* Ogni voce sceglie i propri colori in base a data-colore (vedi vociMenu.ts) */
+.voce[data-colore='verde'] {
+  --colore-voce: var(--pastello-verde);
+  --colore-voce-scuro: var(--scuro-verde);
+}
+.voce[data-colore='azzurro'] {
+  --colore-voce: var(--pastello-azzurro);
+  --colore-voce-scuro: var(--scuro-azzurro);
+}
+.voce[data-colore='violetto'] {
+  --colore-voce: var(--pastello-violetto);
+  --colore-voce-scuro: var(--scuro-violetto);
+}
+.voce[data-colore='acqua'] {
+  --colore-voce: var(--pastello-acqua);
+  --colore-voce-scuro: var(--scuro-acqua);
+}
+
+.voce {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex: 1;
+  color: var(--colore-testo-secondario);
+  text-decoration: none;
+  border-radius: var(--raggio);
+}
+
+.bollaIcona {
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 2.75rem;
+  border-radius: 1.375rem;
+  transition: background-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+
+.icona {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.voce:hover .bollaIcona {
+  background: rgb(0 0 0 / 0.04);
+}
+
+.voceAttiva {
+  color: var(--colore-voce-scuro);
+}
+
+.voceAttiva .bollaIcona,
+.voceAttiva:hover .bollaIcona {
+  background: var(--colore-voce);
+  transform: translateY(-2px);
+}
+
+/* ---------- Schermo grande: più respiro intorno al contenuto ---------- */
+
+@media (min-width: 48rem) {
+  .contenuto {
+    padding-top: var(--spazio-8);
+    padding-left: var(--spazio-8);
+    padding-right: var(--spazio-8);
+  }
+}
+
+/* Chi ha chiesto meno animazioni al sistema operativo non le vede */
+@media (prefers-reduced-motion: reduce) {
+  .bollaIcona {
+    transition: none;
+  }
+}

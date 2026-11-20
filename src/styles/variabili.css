@@ -1,0 +1,65 @@
+/**
+ * variabili.css
+ * Palette e misure dell'app. Ogni colore e misura viene da qui:
+ * cambiando un valore cambia in tutta l'app.
+ * Tema: pastello verde, azzurro, violetto.
+ */
+
+:root {
+  /* Pastelli (sfondi delle voci attive, badge, dettagli) */
+  --pastello-verde: #bfe8d3;
+  --pastello-azzurro: #c4e4f7;
+  --pastello-violetto: #ddd2f7;
+  --pastello-acqua: #c2ece9;
+
+  /* Versioni scure degli stessi colori (icone e testo sopra i pastelli) */
+  --scuro-verde: #2f7a57;
+  --scuro-azzurro: #2d6f96;
+  --scuro-violetto: #5b45a8;
+  --scuro-acqua: #26766f;
+
+  /* Sfondo della pagina: sfumatura leggera verde -> azzurro -> violetto */
+  --sfondo-pagina: linear-gradient(160deg, #eef8f3 0%, #eef5fc 50%, #f3effc 100%);
+  --gradiente-accento: linear-gradient(120deg, var(--pastello-verde), var(--pastello-azzurro), var(--pastello-violetto));
+
+  /* Colori di base */
+  --colore-superficie: #ffffff;
+  --colore-testo: #2b2d42;
+  --colore-testo-secondario: #6c6f85;
+  --colore-bordo: #e3e1ef;
+  --colore-primario: var(--scuro-violetto);     /* link, bordi attivi */
+  --colore-focus: #9b87e0;                      /* contorno quando un campo è selezionato */
+
+  /* Colori con un significato */
+  --colore-entrata: var(--scuro-verde);
+  --colore-uscita: #b4233a;
+  --colore-errore: #b4233a;
+
+  /* Priorità di spesa */
+  --colore-devo: #b4233a;
+  --colore-ho-bisogno: #b8600b;
+  --colore-voglio: var(--scuro-violetto);
+
+  /* Ombre */
+  --ombra-morbida: 0 8px 24px rgb(91 69 168 / 0.12);
+  --ombra-menu: 0 10px 30px rgb(91 69 168 / 0.18);
+
+  /* Spaziature (1rem = 16px) */
+  --spazio-1: 0.25rem;
+  --spazio-2: 0.5rem;
+  --spazio-3: 0.75rem;
+  --spazio-4: 1rem;
+  --spazio-6: 1.5rem;
+  --spazio-8: 2rem;
+
+  /* Forme e testo */
+  --raggio: 0.75rem;
+  --raggio-grande: 1.5rem;
+  --font-base: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --dimensione-testo: 1rem;
+
+  /* Layout */
+  --altezza-menu: 4.25rem;
+  --larghezza-menu-max: 26rem;
+  --larghezza-contenuto-max: 60rem;
+}
