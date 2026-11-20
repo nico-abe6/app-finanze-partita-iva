@@ -13,6 +13,11 @@ import { WidgetRiepilogoAnno } from './WidgetRiepilogoAnno';
 import { WidgetTabellaAnnuale } from './WidgetTabellaAnnuale';
 import { WidgetTabellaMensile } from './WidgetTabellaMensile';
 import { WidgetTotaleDaInizio } from './WidgetTotaleDaInizio';
+import { WidgetFlussiAnno } from './WidgetFlussiAnno';
+import { WidgetFlussiMensili } from './WidgetFlussiMensili';
+import { WidgetSaldiConti } from './WidgetSaldiConti';
+import { WidgetSpeseEtichette } from './WidgetSpeseEtichette';
+import { WidgetSpesePriorita } from './WidgetSpesePriorita';
 
 export const REGISTRO_WIDGET: Record<TipoWidget, ComponentType<ProprietaWidget>> = {
   riepilogo_anno: WidgetRiepilogoAnno,
@@ -22,4 +27,9 @@ export const REGISTRO_WIDGET: Record<TipoWidget, ComponentType<ProprietaWidget>>
   totale_da_inizio: WidgetTotaleDaInizio,
   grafico_annuale: WidgetGraficoAnnuale,
   tabella_annuale: WidgetTabellaAnnuale,
+  saldi_conti: WidgetSaldiConti,
+  flussi_anno: WidgetFlussiAnno,
+  flussi_mensili: WidgetFlussiMensili,
+  spese_priorita: WidgetSpesePriorita,
+  spese_etichette: WidgetSpeseEtichette,
 };

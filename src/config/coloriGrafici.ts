@@ -21,3 +21,20 @@ export const COLORI_STRUTTURA_GRAFICO = {
   superficie: '#ffffff',
   evidenziaColonna: 'rgb(123 95 209 / 0.06)',
 } as const;
+
+/** Finanze personali: entrate e uscite (coppia verificata per il daltonismo) */
+export const COLORI_FLUSSI = {
+  entrate: '#3b82c4',  // azzurro
+  uscite: '#d0704a',   // corallo
+} as const;
+
+/** Spese per priorità: verificati come gruppo; "ho bisogno" ha contrasto basso, per questo i valori sono sempre scritti */
+export const COLORI_PRIORITA = {
+  devo: '#c2413a',
+  ho_bisogno: '#c98a1b',
+  voglio: '#5b45a8',
+  non_indicata: '#a5a3b5',
+} as const;
+
+/** Spese per etichetta: una sola serie, un solo colore */
+export const COLORE_SPESE_ETICHETTA = '#7b5fd1';

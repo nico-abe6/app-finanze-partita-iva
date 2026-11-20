@@ -85,6 +85,10 @@
   .riquadri4 .riquadroPrincipale .riquadroValore {
     font-size: 1.5rem;
   }
+
+  .riquadri5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
 }
 
 /* ---------- Barra di composizione (netto / INPS / imposta) ---------- */
@@ -177,4 +181,108 @@
   padding: var(--spazio-6) var(--spazio-2);
   text-align: center;
   color: var(--colore-testo-secondario);
+}
+
+/* ---------- Barre orizzontali ---------- */
+
+.barre {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.barraTesti {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spazio-3);
+  margin-bottom: var(--spazio-1);
+  font-size: 0.9rem;
+}
+
+.barraEtichetta {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.barraEtichetta::first-letter {
+  text-transform: uppercase;
+}
+
+.barraValore {
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.barraPercentuale {
+  font-weight: 400;
+  color: var(--colore-testo-secondario);
+}
+
+.barraTraccia {
+  height: 0.5rem;
+  border-radius: 999px;
+  background: #f1eff8;
+}
+
+.barraRiempimento {
+  height: 100%;
+  min-width: 2px;
+  border-radius: 999px;
+}
+
+/* ---------- Elenco conti ---------- */
+
+.conti {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.conto {
+  display: flex;
+  align-items: center;
+  gap: var(--spazio-3);
+  padding: var(--spazio-2) 0;
+}
+
+.conto + .conto {
+  border-top: 1px solid #f1eff8;
+}
+
+.contoPallino {
+  width: 0.75rem;
+  height: 0.75rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.contoNome {
+  flex: 1;
+  min-width: 0;
+}
+
+.contoTipo {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--colore-testo-secondario);
+}
+
+.contoSaldo {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.negativo {
+  color: var(--colore-uscita);
+}
+
+.riquadroPrincipaleSolo {
+  margin-bottom: var(--spazio-3);
 }

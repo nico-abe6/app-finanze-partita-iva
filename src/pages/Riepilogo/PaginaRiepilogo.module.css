@@ -83,3 +83,19 @@
   font-size: 0.85rem;
   color: var(--colore-testo-secondario);
 }
+
+.gruppoCatalogo + .gruppoCatalogo {
+  margin-top: var(--spazio-4);
+}
+
+.titoloGruppo {
+  margin: 0 0 var(--spazio-2);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--colore-testo-secondario);
+}
+
+.dialogScorrevole {
+  overflow-y: auto;
+}

@@ -12,31 +12,39 @@ import { FoglioModale } from '../../components/FoglioModale/FoglioModale';
 import { IconaMatita, IconaPiu, IconaSpunta } from '../../components/Icone/Icone';
 import { SelettoreAnno } from '../../components/SelettoreAnno/SelettoreAnno';
 import { REGISTRO_WIDGET } from '../../components/widget/registroWidget';
-import { CATALOGO_WIDGET } from '../../config/catalogoWidget';
+import { CATALOGO_WIDGET, TITOLI_GRUPPI_WIDGET } from '../../config/catalogoWidget';
 import { annoIniziale, anniSelezionabili } from '../../domain/anni';
 import { aggiungiWidget, rimuoviWidget, spostaWidget } from '../../domain/dashboard';
+import { elencaAnniConMovimenti } from '../../domain/movimenti';
 import { elencaAnniConDati } from '../../domain/riepilogoPeriodi';
+import { useDatiFinanze } from '../../hooks/useDatiFinanze';
 import { useDatiFiscali } from '../../hooks/useDatiFiscali';
 import { generaIdWidget, useWidgetDashboard } from '../../hooks/useWidgetDashboard';
-import { TIPI_WIDGET, type TipoWidget } from '../../types/dashboard';
+import { TIPI_WIDGET, type GruppoWidget, type TipoWidget } from '../../types/dashboard';
 import stili from './PaginaRiepilogo.module.css';
+
+const GRUPPI: GruppoWidget[] = ['partita_iva', 'finanze'];
 
 export function PaginaRiepilogo() {
   const { stato } = useDatiFiscali();
+  const { stato: statoFinanze } = useDatiFinanze();
   const { widget, avviso, modificaWidget } = useWidgetDashboard();
   const [annoCorrente] = useState(() => new Date().getFullYear());
   const [annoScelto, setAnnoScelto] = useState<number | null>(null);
   const [inModifica, setInModifica] = useState(false);
   const [catalogoAperto, setCatalogoAperto] = useState(false);
 
-  if (stato.fase === 'errore') {
-    return <p className="messaggio messaggio--errore">Impossibile caricare i dati: {stato.messaggio}</p>;
+  if (stato.fase === 'errore' || statoFinanze.fase === 'errore') {
+    const messaggio = stato.fase === 'errore' ? stato.messaggio : statoFinanze.fase === 'errore' ? statoFinanze.messaggio : '';
+    return <p className="messaggio messaggio--errore">Impossibile caricare i dati: {messaggio}</p>;
   }
-  if (stato.fase === 'caricamento' || widget === null) {
+  if (stato.fase === 'caricamento' || statoFinanze.fase === 'caricamento' || widget === null) {
     return <p className="messaggio-caricamento">Caricamento…</p>;
   }
 
-  const anniConDati = elencaAnniConDati(stato.righe);
+  const anniConDati = [...new Set([...elencaAnniConDati(stato.righe), ...elencaAnniConMovimenti(statoFinanze.movimenti)])].sort(
+    (a, b) => a - b
+  );
   const anno = annoScelto ?? annoIniziale(anniConDati, annoCorrente);
   const tipiPresenti = new Set(widget.map((voce) => voce.tipo));
 
@@ -86,7 +94,13 @@ export function PaginaRiepilogo() {
               onSposta={(direzione) => modificaWidget((lista) => spostaWidget(lista, voce.id, direzione))}
               onRimuovi={() => modificaWidget((lista) => rimuoviWidget(lista, voce.id))}
             >
-              <ComponenteWidget righe={stato.righe} impostazioni={stato.impostazioni} anno={anno} />
+              <ComponenteWidget
+                righe={stato.righe}
+                impostazioni={stato.impostazioni}
+                conti={statoFinanze.conti}
+                movimenti={statoFinanze.movimenti}
+                anno={anno}
+              />
             </ContenitoreWidget>
           );
         })}
@@ -100,21 +114,26 @@ export function PaginaRiepilogo() {
       </div>
 
       <FoglioModale aperto={catalogoAperto} titolo="Aggiungi un widget" onChiudi={() => setCatalogoAperto(false)}>
-        <ul className={stili.catalogo}>
-          {TIPI_WIDGET.map((tipo) => {
-            const presente = tipiPresenti.has(tipo);
-            return (
-              <li key={tipo}>
-                <button type="button" className={stili.voceCatalogo} onClick={() => aggiungi(tipo)} disabled={presente}>
-                  <span className={stili.voceCatalogoTitolo}>{CATALOGO_WIDGET[tipo].titolo}</span>
-                  <span className={stili.voceCatalogoDescrizione}>
-                    {presente ? 'Già nella pagina' : CATALOGO_WIDGET[tipo].descrizione}
-                  </span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+        {GRUPPI.map((gruppo) => (
+          <section key={gruppo} className={stili.gruppoCatalogo}>
+            <h3 className={stili.titoloGruppo}>{TITOLI_GRUPPI_WIDGET[gruppo]}</h3>
+            <ul className={stili.catalogo}>
+              {TIPI_WIDGET.filter((tipo) => CATALOGO_WIDGET[tipo].gruppo === gruppo).map((tipo) => {
+                const presente = tipiPresenti.has(tipo);
+                return (
+                  <li key={tipo}>
+                    <button type="button" className={stili.voceCatalogo} onClick={() => aggiungi(tipo)} disabled={presente}>
+                      <span className={stili.voceCatalogoTitolo}>{CATALOGO_WIDGET[tipo].titolo}</span>
+                      <span className={stili.voceCatalogoDescrizione}>
+                        {presente ? 'Già nella pagina' : CATALOGO_WIDGET[tipo].descrizione}
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))}
       </FoglioModale>
     </>
   );

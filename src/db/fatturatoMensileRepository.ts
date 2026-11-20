@@ -44,21 +44,27 @@ export async function leggiFatturatoMensile(): Promise<FatturatoMensile[]> {
   return (data as RigaFatturatoDb[]).map(daRigaDb);
 }
 
-/** Inserisce il mese o, se esiste già (stesso anno e mese), lo aggiorna */
-export async function salvaFatturatoMensile(riga: FatturatoMensile): Promise<void> {
+/** Inserisce i mesi o, se esistono già (stesso anno e mese), li aggiorna */
+export async function salvaFatturatiMensili(righe: FatturatoMensile[]): Promise<void> {
+  if (righe.length === 0) return;
   const idUtente = await leggiIdUtenteCollegato();
   const { error } = await supabase.from(NOME_TABELLA).upsert(
-    {
+    righe.map((riga) => ({
       user_id: idUtente,
       anno: riga.anno,
       mese: riga.mese,
       incassato_centesimi: riga.incassatoCentesimi,
       contributi_inps_versati_centesimi: riga.contributiInpsVersatiCentesimi,
       note: riga.note?.trim() ? riga.note.trim() : null,
-    },
+    })),
     { onConflict: 'user_id,anno,mese' }
   );
   if (error) throw error;
+}
+
+/** Inserisce il mese o, se esiste già (stesso anno e mese), lo aggiorna */
+export async function salvaFatturatoMensile(riga: FatturatoMensile): Promise<void> {
+  await salvaFatturatiMensili([riga]);
 }
 
 /** Cancella il mese indicato */

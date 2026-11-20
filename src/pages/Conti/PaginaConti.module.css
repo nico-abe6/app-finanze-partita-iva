@@ -1,0 +1,340 @@
+/**
+ * PaginaConti.module.css
+ * Patrimonio, card dei conti (scorrevoli su telefono), movimenti per giorno,
+ * pulsante "+" flottante e form di conti e movimenti.
+ */
+
+.patrimonio {
+  margin-bottom: var(--spazio-4);
+  padding: var(--spazio-4);
+  border-radius: var(--raggio-grande);
+  background: var(--gradiente-accento);
+}
+
+.patrimonioEtichetta {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--colore-testo);
+  opacity: 0.75;
+}
+
+.patrimonioValore {
+  margin: var(--spazio-1) 0 0;
+  font-size: 2rem;
+  font-weight: 650;
+}
+
+/* ---------- Card dei conti ---------- */
+
+.schedeConti {
+  display: flex;
+  gap: var(--spazio-3);
+  margin: 0 calc(-1 * var(--spazio-4));
+  padding: var(--spazio-1) var(--spazio-4) var(--spazio-3);
+  overflow-x: auto;
+  list-style: none;
+  scroll-snap-type: x mandatory;
+}
+
+.schedeConti li {
+  scroll-snap-align: start;
+}
+
+.schedaConto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spazio-1);
+  width: 11rem;
+  min-height: 7rem;
+  padding: var(--spazio-3) var(--spazio-4);
+  border: none;
+  border-radius: var(--raggio-grande);
+  text-align: left;
+  cursor: pointer;
+  box-shadow: var(--ombra-morbida);
+}
+
+.schedaTipo {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.schedaNome {
+  font-weight: 600;
+}
+
+.schedaSaldo {
+  margin-top: auto;
+  font-size: 1.15rem;
+  font-weight: 650;
+}
+
+@media (min-width: 48rem) {
+  .schedeConti {
+    flex-wrap: wrap;
+    margin: 0;
+    padding: var(--spazio-1) 0 var(--spazio-3);
+    overflow: visible;
+  }
+}
+
+/* ---------- Movimenti ---------- */
+
+.sezioneMovimenti {
+  margin-top: var(--spazio-6);
+  padding-bottom: 4.5rem; /* spazio per il pulsante "+" */
+}
+
+.barraMovimenti {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spazio-3);
+  margin-bottom: var(--spazio-3);
+}
+
+.titoloSezione {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.filtri {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spazio-2);
+}
+
+.filtroConto {
+  padding: var(--spazio-2) var(--spazio-3);
+  border: none;
+  border-radius: 999px;
+  background: var(--colore-superficie);
+  box-shadow: var(--ombra-morbida);
+}
+
+.flussiMese {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spazio-2);
+  margin: 0 0 var(--spazio-4);
+  padding: var(--spazio-3);
+  border-radius: var(--raggio);
+  background: rgb(255 255 255 / 0.7);
+}
+
+.flussiMese dt {
+  font-size: 0.75rem;
+  color: var(--colore-testo-secondario);
+}
+
+.flussiMese dd {
+  margin: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.vuoto {
+  padding: var(--spazio-6) 0;
+  text-align: center;
+  color: var(--colore-testo-secondario);
+}
+
+.giorno + .giorno {
+  margin-top: var(--spazio-4);
+}
+
+.titoloGiorno {
+  margin: 0 0 var(--spazio-2);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  color: var(--colore-testo-secondario);
+}
+
+.elencoMovimenti {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+  border-radius: var(--raggio);
+  background: var(--colore-superficie);
+  box-shadow: var(--ombra-morbida);
+}
+
+.elencoMovimenti li + li {
+  border-top: 1px solid #f1eff8;
+}
+
+.movimento {
+  display: flex;
+  align-items: center;
+  gap: var(--spazio-3);
+  width: 100%;
+  padding: var(--spazio-3);
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.movimento:hover {
+  background: #faf8ff;
+}
+
+.movimento[data-tipo='entrata'] { --sfondo-simbolo: var(--pastello-azzurro); --testo-simbolo: var(--scuro-azzurro); }
+.movimento[data-tipo='uscita'] { --sfondo-simbolo: var(--pastello-pesca); --testo-simbolo: var(--scuro-pesca); }
+.movimento[data-tipo='risparmio'] { --sfondo-simbolo: var(--pastello-verde); --testo-simbolo: var(--scuro-verde); }
+.movimento[data-tipo='investimento'] { --sfondo-simbolo: var(--pastello-violetto); --testo-simbolo: var(--scuro-violetto); }
+.movimento[data-tipo='trasferimento'] { --sfondo-simbolo: var(--pastello-acqua); --testo-simbolo: var(--scuro-acqua); }
+
+.movimentoSimbolo {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--sfondo-simbolo);
+  color: var(--testo-simbolo);
+  font-weight: 700;
+}
+
+.movimentoTesti {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.movimentoTitolo {
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.movimentoTitolo::first-letter {
+  text-transform: uppercase;
+}
+
+.movimentoDettagli {
+  overflow: hidden;
+  font-size: 0.8rem;
+  color: var(--colore-testo-secondario);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.movimentoEtichette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spazio-1);
+  margin-top: 0.15rem;
+}
+
+.badgeEtichetta,
+.badgePriorita {
+  padding: 0.05rem var(--spazio-2);
+  border-radius: 999px;
+  font-size: 0.72rem;
+}
+
+.badgeEtichetta {
+  background: #f1eff8;
+  color: var(--colore-testo-secondario);
+}
+
+.badgePriorita[data-priorita='devo'] { background: var(--pastello-rosa); color: var(--scuro-rosa); }
+.badgePriorita[data-priorita='ho_bisogno'] { background: var(--pastello-pesca); color: var(--scuro-pesca); }
+.badgePriorita[data-priorita='voglio'] { background: var(--pastello-violetto); color: var(--scuro-violetto); }
+
+.movimentoImporto {
+  flex-shrink: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.movimento[data-tipo='entrata'] .movimentoImporto {
+  color: var(--scuro-verde);
+}
+
+.movimento[data-tipo='risparmio'] .movimentoImporto,
+.movimento[data-tipo='investimento'] .movimentoImporto,
+.movimento[data-tipo='trasferimento'] .movimentoImporto {
+  color: var(--colore-testo-secondario);
+}
+
+/* ---------- Pulsante "+" flottante ---------- */
+
+.pulsanteAggiungi {
+  position: fixed;
+  right: max(var(--spazio-4), calc((100vw - var(--larghezza-contenuto-max)) / 2));
+  bottom: calc(var(--altezza-menu) + var(--spazio-6) + env(safe-area-inset-bottom));
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: none;
+  border-radius: 50%;
+  background: var(--gradiente-accento);
+  color: var(--colore-testo);
+  box-shadow: var(--ombra-menu);
+  cursor: pointer;
+}
+
+.pulsanteAggiungi svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* ---------- Form ---------- */
+
+.modulo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-4);
+}
+
+.rigaDoppia {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spazio-3);
+}
+
+.colori {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spazio-2);
+}
+
+.campione {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.campioneScelto {
+  border-width: 3px;
+  box-shadow: 0 0 0 2px var(--colore-superficie) inset;
+}
+
+.azioniModulo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spazio-2);
+}
+
+.spaziatore {
+  flex: 1;
+}

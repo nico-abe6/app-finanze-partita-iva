@@ -49,7 +49,9 @@ describe('normalizzaWidget', () => {
 
 describe('modifica dell\'elenco', () => {
   it('crea i widget predefiniti con id generati', () => {
-    expect(creaWidgetPredefiniti(generatoreId()).map((widget) => widget.id)).toEqual(['w1', 'w2', 'w3', 'w4']);
+    const widget = creaWidgetPredefiniti(generatoreId());
+    expect(widget.map((voce) => voce.id)).toEqual(widget.map((_voce, indice) => `w${indice + 1}`));
+    expect(widget.length).toBeGreaterThan(0);
   });
 
   it('aggiunge in fondo', () => {

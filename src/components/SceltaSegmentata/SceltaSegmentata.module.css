@@ -1,0 +1,38 @@
+/**
+ * SceltaSegmentata.module.css
+ * Pillole affiancate; quella scelta prende il pastello indicato in data-colore.
+ */
+
+.gruppo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spazio-2);
+}
+
+.opzione {
+  padding: var(--spazio-2) var(--spazio-3);
+  border: 1px solid var(--colore-bordo);
+  border-radius: 999px;
+  background: var(--colore-superficie);
+  color: var(--colore-testo-secondario);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.opzione:hover {
+  border-color: var(--colore-focus);
+}
+
+.opzione[data-colore='verde'] { --sfondo-scelta: var(--pastello-verde); --testo-scelta: var(--scuro-verde); }
+.opzione[data-colore='azzurro'] { --sfondo-scelta: var(--pastello-azzurro); --testo-scelta: var(--scuro-azzurro); }
+.opzione[data-colore='violetto'] { --sfondo-scelta: var(--pastello-violetto); --testo-scelta: var(--scuro-violetto); }
+.opzione[data-colore='acqua'] { --sfondo-scelta: var(--pastello-acqua); --testo-scelta: var(--scuro-acqua); }
+.opzione[data-colore='pesca'] { --sfondo-scelta: var(--pastello-pesca); --testo-scelta: var(--scuro-pesca); }
+.opzione[data-colore='rosa'] { --sfondo-scelta: var(--pastello-rosa); --testo-scelta: var(--scuro-rosa); }
+
+.scelta {
+  border-color: transparent;
+  background: var(--sfondo-scelta);
+  color: var(--testo-scelta);
+  font-weight: 600;
+}

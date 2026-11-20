@@ -10,6 +10,8 @@ import { TIPI_WIDGET, type TipoWidget, type WidgetDashboard } from '../types/das
 export const WIDGET_PREDEFINITI: TipoWidget[] = [
   'riepilogo_anno',
   'grafico_mensile',
+  'saldi_conti',
+  'spese_priorita',
   'tabella_mensile',
   'tabella_annuale',
 ];

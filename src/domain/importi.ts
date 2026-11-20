@@ -93,3 +93,17 @@ export function convertiTestoInCentesimi(testo: string): number | null {
   const centesimi = Number(parteDecimale.padEnd(2, '0'));
   return euro * 100 + centesimi;
 }
+
+/**
+ * Come convertiTestoInCentesimi, ma accetta anche un segno meno davanti (es. "-150,00").
+ * Serve per i saldi iniziali, che possono essere negativi.
+ */
+export function convertiTestoInCentesimiConSegno(testo: string): number | null {
+  const testoPulito = testo.trim();
+  if (testoPulito.startsWith('-')) {
+    const valore = convertiTestoInCentesimi(testoPulito.slice(1));
+    return valore === null ? null : -valore;
+  }
+  return convertiTestoInCentesimi(testoPulito);
+}
+

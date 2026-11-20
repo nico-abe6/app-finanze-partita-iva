@@ -12,6 +12,11 @@ export const TIPI_WIDGET = [
   'totale_da_inizio',
   'grafico_annuale',
   'tabella_annuale',
+  'saldi_conti',
+  'flussi_anno',
+  'flussi_mensili',
+  'spese_priorita',
+  'spese_etichette',
 ] as const;
 
 export type TipoWidget = (typeof TIPI_WIDGET)[number];
@@ -24,3 +29,6 @@ export type WidgetDashboard = {
 
 /** Su schermo grande un widget occupa mezza riga o la riga intera */
 export type LarghezzaWidget = 'mezza' | 'intera';
+
+/** Sezioni del catalogo dei widget */
+export type GruppoWidget = 'partita_iva' | 'finanze';

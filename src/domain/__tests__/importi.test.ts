@@ -6,6 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   centesimiInTestoModificabile,
+  convertiTestoInCentesimiConSegno,
   convertiTestoInCentesimi,
   formattaCentesimiInEuro,
   formattaEuroPerAsse,
@@ -67,5 +68,14 @@ describe('centesimiInTestoModificabile', () => {
       expect(convertiTestoInCentesimi(centesimiInTestoModificabile(centesimi))).toBe(centesimi);
     }
     expect(centesimiInTestoModificabile(125050)).toBe('1250,50');
+  });
+});
+
+describe('convertiTestoInCentesimiConSegno', () => {
+  it('accetta il segno meno', () => {
+    expect(convertiTestoInCentesimiConSegno('-150,50')).toBe(-15050);
+    expect(convertiTestoInCentesimiConSegno('150')).toBe(15000);
+    expect(convertiTestoInCentesimiConSegno('--1')).toBeNull();
+    expect(convertiTestoInCentesimiConSegno('-')).toBeNull();
   });
 });

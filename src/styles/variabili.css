@@ -11,12 +11,16 @@
   --pastello-azzurro: #c4e4f7;
   --pastello-violetto: #ddd2f7;
   --pastello-acqua: #c2ece9;
+  --pastello-pesca: #fbd9c9;
+  --pastello-rosa: #f6d0e3;
 
   /* Versioni scure degli stessi colori (icone e testo sopra i pastelli) */
   --scuro-verde: #2f7a57;
   --scuro-azzurro: #2d6f96;
   --scuro-violetto: #5b45a8;
   --scuro-acqua: #26766f;
+  --scuro-pesca: #a4512c;
+  --scuro-rosa: #9c3d6e;
 
   /* Sfondo della pagina: sfumatura leggera verde -> azzurro -> violetto */
   --sfondo-pagina: linear-gradient(160deg, #eef8f3 0%, #eef5fc 50%, #f3effc 100%);

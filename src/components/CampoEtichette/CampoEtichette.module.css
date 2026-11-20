@@ -1,0 +1,65 @@
+/**
+ * CampoEtichette.module.css
+ * Etichette come pillole lilla dentro un campo che si allarga.
+ */
+
+.campo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spazio-1);
+  padding: var(--spazio-2);
+  border: 1px solid var(--colore-bordo);
+  border-radius: var(--raggio);
+  background: #fbfaff;
+}
+
+.campo:focus-within {
+  border-color: var(--colore-focus);
+  box-shadow: 0 0 0 3px var(--pastello-violetto);
+}
+
+.etichetta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.15rem 0.25rem 0.15rem var(--spazio-2);
+  border-radius: 999px;
+  background: var(--pastello-violetto);
+  color: var(--scuro-violetto);
+  font-size: 0.85rem;
+}
+
+.togli {
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.togli svg {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+/* doppia classe: deve prevalere sullo stile generico ".campo input" di componenti.css */
+.campo .input {
+  flex: 1;
+  min-width: 8rem;
+  padding: var(--spazio-1);
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  color: var(--colore-testo);
+  font-size: var(--dimensione-testo);
+}
+
+.campo .input:focus {
+  outline: none;
+}
